@@ -12,7 +12,7 @@ Collecting, cleaning, and merging daily snowfall time series data from various m
 Addison G. Klinke  
 Email: agk38@case.edu  
 LinkedIn: https://www.linkedin.com/in/addison-klinke-28768b97/  
-Resume: see 'Resume-AddisonKlinke' in this repository's root folder  
+Resume: see 'Resume-AddisonKlinke.pdf' in this repository's root folder  
 
 ## Installation
 
@@ -20,7 +20,7 @@ Code in this repository was written in Python >= 3.6.5 (https://www.python.org/g
 
 ## Conventions
 
-numpy docstrings (https://numpydoc.readthedocs.io/en/latest/format.html)
+Python objects are documented with numpy style docstrings (https://numpydoc.readthedocs.io/en/latest/format.html)
 
 ## Contributing
 
