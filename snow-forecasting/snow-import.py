@@ -1,3 +1,5 @@
+"""Use the ReadSnowData() function to download all records from API and compile into CSV's."""
+
 # Load required modules and user defined functions
 import os, urllib, re
 import pandas as pd

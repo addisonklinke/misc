@@ -1,3 +1,5 @@
+"""Exploratory data analysis for snow-clean.csv file."""
+
 # Load required modules and data
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
