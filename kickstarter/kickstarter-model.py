@@ -14,7 +14,6 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
-from sklearn.svm import SVC
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.pipeline import Pipeline
 
@@ -36,6 +35,9 @@ df.query("launch_year != 1970", inplace=True)
 df.corr().unstack().sort_values().drop_duplicates()
 # Currency and country are (unsurprisingly) highly correlated, so we will remove currency
 df.drop(columns='currency', inplace=True)
+cols = list(df.columns)
+cols.append(cols.pop(cols.index('state')))
+df = df.reindex(columns=cols)
 
 # Initial Modeling ------------------------------------------------------------
 seed = 1234
@@ -43,8 +45,7 @@ y = df.state.values
 x = df.values[:, :-1]
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=seed)
 models = [('LR', LogisticRegression()), ('LDA', LinearDiscriminantAnalysis()),
-          ('KNN', KNeighborsClassifier()), ('CART', DecisionTreeClassifier()),
-          ('SVC', SVC()), ('NB', GaussianNB())]
+          ('KNN', KNeighborsClassifier()), ('CART', DecisionTreeClassifier()), ('NB', GaussianNB())]
 names = [n for n, m in models]
 ctrl = KFold(n_splits=5, random_state=seed)
 results = [cross_val_score(m, x_train, y_train, cv=ctrl, scoring='accuracy') for n, m in models]
