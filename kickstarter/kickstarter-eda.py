@@ -1,12 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Tue Jul 24 04:55:04 2018
+EDA and visualization for the Kickstarter projects dataset. 
 
 @author: Addison Klinke
-
-EDA and visualization for the Kickstarter projects dataset from Kaggle 
-(https://www.kaggle.com/kemical/kickstarter-projects)
+Data from Kaggle (https://www.kaggle.com/kemical/kickstarter-projects)
 """
 
 # Load required modules and data ----------------------------------------------
@@ -52,6 +48,21 @@ df['launch_day'] = [d.date() for d in df.launched]
 df['launch_time'] = [d.time() for d in df.launched]
 df['duration'] = [(d - l).days for d, l in zip(df.deadline.dt.date, df.launch_day)]
 df.drop(columns='launched', inplace=True)
+np.unique(df.launch_day.dt.year)
+
+# TODO: drop the 1970's rows
+
+# Split launch_time into hours, minutes, and seconds and convert to a single
+# decimal respresentation. 
+df[['h', 'm', 's']] = df.launch_time.astype(str).str.split(':', expand=True).astype(float)
+df['launch_time'] = df.h.values + df.m.values / 60 + df.s.values / 3600
+df.drop(columns=['h', 'm', 's'], inplace=True)
+
+# We can also encode launch_day and deadline as integers representing day of 
+# the year. Both of these transformations will make the data more suitable for 
+# plotting and modeling. We can keep the year information from launch and 
+# deadline dates in a single column since 
+
 
 # We will also move the 'state' column last so that splitting features and 
 # target will be easy in sklearn
@@ -126,10 +137,11 @@ plt.show()
 # duration - project with a larger funding goal failed more often. The most 
 # common goals were around $10k USD
 
+# What about time of day the project was launched? If people are most likely
+# to hear about a project at its inception, it would be critical to launch at
+# a time when people are available (for instance, weekday evenings).
+smaller = df[['launch_time', 'state']]
+smaller['h']
+sns.tsplot()
+
 # Insights on project name choices from an NLP perspective?
-
-# Initial Modeling ------------------------------------------------------------
-
-# Ensemble Modeling -----------------------------------------------------------
-
-# Export Final Model ----------------------------------------------------------
